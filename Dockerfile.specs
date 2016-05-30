@@ -1,0 +1,19 @@
+from ubuntu:16.04
+
+# from futon_tests/base:latest
+maintainer cezary@chronomantic.net
+
+RUN apt-get -y update && apt-get -y install ruby bundler git-core
+
+RUN /bin/bash -l -c "echo 'gem: --no-ri --no-rdoc' > ~/.gemrc"
+RUN gem install rake
+RUN gem install bundler
+
+RUN mkdir -p /home/guest/cache/futon
+ADD Gemfile Gemfile.lock futon.gemspec /home/guest/cache/futon/
+ADD exe/futon /home/guest/cache/futon/exe/
+ADD lib/futon/version.rb /home/guest/cache/futon/lib/futon/
+
+RUN cd /home/guest/cache/futon && IN_DOCKER=1 bundle install --without=development
+
+# vi: ft=dockerfile:
