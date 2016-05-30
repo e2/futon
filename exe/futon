@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'futon/cli'
+
+Futon::Cli.new(ARGV).execute!

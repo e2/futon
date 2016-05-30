@@ -1,0 +1,13 @@
+install_gem_from_cache()
+{
+  cache_dir=/home/guest/cache/futon/
+  source_dir=/home/guest/futon/
+
+  # Update and copy to avoid reusing/clobbering  work folder files
+  rsync -ar --exclude '.*' --exclude 'Dockerfile.*' --exclude '.git/' --exclude 'pkg/' --exclude 'bin/' --exclude '*.swp' --exclude '.tup/' --exclude 'tmp/' --exclude 'tags' --exclude 'results/' "$source_dir" "$cache_dir"
+
+  # Install gem from cache dir
+  cd "$cache_dir" && IN_DOCKER=1 rake install:local > /dev/null
+}
+
+# vi:ft=sh:

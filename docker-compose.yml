@@ -1,0 +1,13 @@
+version: '2'
+services:
+  specs_image:
+    image: 'futon/specs'
+    container_name: 'futon-specs-1'
+    build:
+      context: .
+      dockerfile: Dockerfile.specs
+    working_dir: '/home/guest/futon'
+    command: "bash -l"
+    dns: 172.17.0.1 # TODO: from an env variable?
+    volumes:
+      - .:/home/guest/futon:ro

@@ -1,0 +1,6 @@
+--fail-fast
+--format documentation
+--color
+--require spec_helper
+--tty
+--order defined

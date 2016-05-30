@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -eu
+
+source "$(dirname "$0")/install_gem_from_cache"
+
+mkdir -p "$HOME/.futon"
+cat > "$HOME/.futon/default.yml" <<EOF
+---
+:workspaces:
+  mytest:
+    :directory: '/home/guest/workspace/mytest'
+    :source:
+      type: :git
+      :url: "/home/guest/futon"
+EOF
+
+install_gem_from_cache
+
+futon
+
+# Why lib/futon.rb? Probably because it won't changed often.
+cd /home/guest/workspace/mytest && echo "6b762208c8e016c7098ea481c73061cb  lib/futon.rb" | md5sum --status -c || exit 1
